@@ -1,0 +1,97 @@
+1，keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+
+2, 找到路径/android/app/src/main,并在该目录下新建assets文件夹
+
+3，curl -k "http://localhost:8081/index.android.bundle" > android/app/src/main/assets/index.android.bundle
+
+4 ,signingConfigs{ 
+       
+        release{ 
+		
+           storeFile file("F://xiaohuiz/my-release-key.keystore")  
+	
+           storePassword "1993217"	
+           keyAlias "my-keys-bz" 
+		
+           keyPassword "1993217" 
+       
+     }   
+   
+ }
+
+    buildTypes {
+    
+        release {
+        
+           minifyEnabled enableProguardInReleaseBuilds
+       
+           proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+		
+           signingConfig signingConfigs.release
+      
+     }
+ 
+ }
+
+ 5  gradle assembleRelease
+
+react-native bundle --entry-file index.android.js --bundle-output ./android/app/src/main/assets/index.android.jsbundle --platform android --assets-dest ./android/app/src/main/res/ --dev false
+  ndk  https://dl.google.com/android/repository/android-ndk-r12b-windows-x86_64.zip
+
+
+react-native bundle --entry-file index.ios.js --bundle-output ./ios/main.jsbundle --platform ios --assets-dest ./ios --dev false
+
+http://2691.03in.com:8082/mobile/customer/ios/index.html#/home
+
+
+componentWillMount() {
+    PushNotificationIOS.addEventListener('notification', this.localNotification.bind(this));
+    PushNotificationIOS.addEventListener('register', this._registNotification.bind(this));
+    PushNotificationIOS.requestPermissions();
+  }
+
+  componentWillUnmount() {
+    PushNotificationIOS.removeEventListener('notification', this.localNotification);
+  }
+
+
+  _registNotification(deviceToken){
+  }
+
+  _handleAppStateChange(appState){
+  	this.setState({appState});
+  }
+  localNotification(notification) {
+    PushNotificationIOS.setApplicationIconBadgeNumber(notification.getBadgeCount()-1);
+    const data = notification.getData();
+    if(this.state.appState == 'active'){
+    	if(data.url != ''){
+    	    this.setState({isshows:true,infost:notification.getMessage()});
+        }
+    	return;
+    }
+    if(data.url != ''){
+    var { navigator } = this.props;
+        if(navigator) {
+			InteractionManager.runAfterInteractions(() => {
+            navigator.push({
+                name: 'adds',
+                component: adds,
+            })
+			})
+		}
+        }
+  }
+
+
+
+
+
+signingConfigs{  
+        release{  
+           storeFile file("F://egreact/App/linksa/my-release-key.keystore")   
+           storePassword "1993217"	
+           keyAlias "my-key-linksa"  
+           keyPassword "1993217"  
+	    }    
+	}
