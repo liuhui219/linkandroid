@@ -22,6 +22,7 @@ import com.filepicker.FilePickerPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage; 
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.beefe.picker.PickerViewPackage;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.reactnativecomponent.barcode.RCTCapturePackage; 
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.cboy.rn.splashscreen.SplashScreenReactPackage;
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ReactApplication {
 		  new HttpCachePackage(), 
 		  new AndroidWebViewPackage(),
 		  new RCTCameraPackage(),
+		  new MPAndroidChartPackage(),
 		  new RCTCapturePackage(),
 		  new SharePackage(),
 		  new RNSpinkitPackage(),

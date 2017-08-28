@@ -127,6 +127,7 @@ android {
 }
 
 dependencies { 
+    compile project(':react-native-charts-wrapper')
     compile project(':RCTWeChat')
     compile project(':react-native-share-extension')
     compile project(':react-native-spinkit')

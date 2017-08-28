@@ -6,13 +6,14 @@ import {
   StyleSheet,
   StatusBar,
   BackHandler,
+  Text,
   InteractionManager,
   View,
   Platform
 } from 'react-native';
 import {Navigator} from 'react-native-deprecated-custom-components';
 import Splash from './Splash';
-
+import PassState from './PassState';
 export const STATUS_BAR_HEIGHT = (Platform.OS === 'ios' ? 20 : 25)
 export const ABOVE_LOLIPOP = Platform.Version && Platform.Version > 19
 var _navigator;
@@ -56,6 +57,7 @@ class rootApp extends Component {
   			barStyle="light-content"
   			translucent={true}
        />
+	   
         <Navigator
           ref='navigator'
           style={styles.navigator}
@@ -65,7 +67,7 @@ class rootApp extends Component {
             component: Splash,
             name: 'Splash'
           }}
-        />
+        />  
       </View>
     );
   }

@@ -29,6 +29,7 @@ import Gonggao from './Gonggao';
 import Scanner from './scanner';
 import pan from './pan';
 import Sales from './Sales/Sales';
+import Chart from './Chart/chart';
 import ProjectM from './Project/ProjectM';
 import cameraCard from './cameraCard';
 import Netinfo from './Netinfo';
@@ -38,7 +39,7 @@ import Spinner from 'react-native-spinkit';
 export default class Application extends Component {
 	constructor(props) {
         super(props);
-        
+
         this.state = {
           domain:'',
 		  cid:'',
@@ -243,8 +244,8 @@ export default class Application extends Component {
            statua:false,
 	    })
 	}
-	
-	 
+
+
 
 	render() {
       return (
@@ -337,7 +338,16 @@ export default class Application extends Component {
 					   </Text>
 					  </View>
 					</TouchableNativeFeedback>
-					 
+					<TouchableNativeFeedback  onPress={this._all.bind(this,Chart )} >
+					  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>
+					   <View style={{width: 35, height: 35,borderRadius:5,backgroundColor:'#c2de53',alignItems:'center', justifyContent:'center'}}>
+					      <Image source={require('./imgs/chart.png')} style={{width: 26, height: 26,}} />
+					   </View>
+					   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{marginTop:8,fontSize:13}}>
+					      报表
+					   </Text>
+					  </View>
+					</TouchableNativeFeedback>
 
 
 				</View>

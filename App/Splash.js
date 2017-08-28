@@ -111,6 +111,7 @@ class Splash extends Component {
          barStyle="light-content"
          translucent={true}
         />
+		
       </View>
     );
   }

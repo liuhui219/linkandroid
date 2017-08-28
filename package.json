@@ -8,10 +8,12 @@
   },
   "dependencies": {
     "centrifuge": "^1.4.6",
+    "immutability-helper": "^2.3.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-baidu-map": "^0.4.8",
     "react-native-camera": "^0.7.0",
+    "react-native-charts-wrapper": "^0.2.10",
     "react-native-check-box": "^1.0.4",
     "react-native-communications": "^2.1.0",
     "react-native-contacts": "^0.8.1",
