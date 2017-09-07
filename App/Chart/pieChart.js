@@ -131,8 +131,9 @@ export default class PieChartScreen extends React.Component {
 		       data = JSON.parse(responseData.data);
 		       cons = JSON.parse(responseData.boardInfo);
 			   console.log(data)
+			   console.log(cons)
 			   cons.layout.rows.forEach((info,i)=>{ 
-				   if(info.type){
+				   if(info.type == 'widget'){
 					   data.data[0].forEach((ds,j)=>{ 
 					     info.widgets[0].widget.data.config.keys.forEach((ke,v)=>{
 							 if(ds == ke.col){

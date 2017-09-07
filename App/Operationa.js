@@ -26,6 +26,11 @@ import marketm from './marketm';
 import qus from './qus';
 import CarM from './CarM';
 import customerm from './customerm';
+import FenX1 from './Examine/FenX1';
+import FenX2 from './Examine/FenX2';
+import FenX3 from './Examine/FenX3';
+import FenX4 from './Examine/FenX4';
+import Jxs from './Examine/Jxs';
 import Icon from 'react-native-vector-icons/Ionicons';
 let array = [];
 let aa=[];
@@ -107,6 +112,7 @@ export default class Approvalb extends React.Component {
                     return response.json();
 				})
 				.then(function (result) {
+					console.log(result)
 					if(result.data != null){
 					   result.data.forEach((Data,i) => {
 						   key={i}
@@ -277,6 +283,92 @@ export default class Approvalb extends React.Component {
 	                    }
 					}
 	            })
+			 }else if(data.app_name == '经销商管理'){
+				 if(data.from == 'Dealer_2'){
+					navigator.push({
+						name: 'Jxs',
+						component: Jxs,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }
+				
+			 }else if(data.app_name == '分销管理'){
+				 // get王严(Dms_1,Dms_2,Dms_3)
+				 if(data.from == 'Dms_1'){
+					navigator.push({
+						name: 'FenX1',
+						component: FenX1,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_2'){
+					navigator.push({
+						name: 'FenX2',
+						component: FenX2,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_3'){
+					navigator.push({
+						name: 'FenX3',
+						component: FenX3,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_4'){
+					navigator.push({
+						name: 'FenX4',
+						component: FenX4,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else{
+					 navigator.push({
+						name: 'qus',
+						component: qus
+					})
+				 }	
 			 }else{
 			 	navigator.push({
 	                name: 'qus',

@@ -540,7 +540,7 @@ export default class Contacts extends Component {
           				   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,color:'#555'}}>{rowData.name}</Text>
           					 <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:12,color:'#999'}}>{rowData.departName}</Text>
           				</View>
-  			      </View>
+  			  </View>
 
   		 </TouchableNativeFeedback>
   		);

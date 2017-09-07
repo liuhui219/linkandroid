@@ -111,7 +111,7 @@ export default class Marketm extends Component {
 
 					 that.setState({
 						loaded:true,
-						loadedst:true,
+						
 						datas: result.data,
 						datasx:result,
 					});
@@ -136,6 +136,7 @@ export default class Marketm extends Component {
 
 							console.log(result)
 							that.setState({
+								loadedst:true,
 								SHR:result.btns.auth_users,
 								listCheck:result.btns.list,
 							});
