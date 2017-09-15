@@ -82,7 +82,7 @@ export default class leave extends React.Component {
     GetSh(){
       var that = this;
       aa = [];
-      fetch('' + this.state.domain + '/index.php?app=Account&m=ExpenseApi&a=select_auditlist&apps=Account&ms=Expense&as=auditqx&access_token=' + this.state.token + '', {
+      fetch('' + this.state.domain + '/index.php?app=Account&m=ExpenseApi&a=select_auditlist&access_token=' + this.state.token + '', {
        method: 'POST',
        headers: {
        'Content-Type': 'application/x-www-form-urlencoded',

@@ -83,18 +83,18 @@ export default class SQoffice extends React.Component {
       this.GetSh();
     }
 
-    GetSh(){
+    GetSh(){    
       var that = this;
       aa = [];
-      fetch('' + this.state.domain + '/index.php?app=Account&m=ExpenseApi&a=select_auditlist&apps=Account&ms=Expense&as=auditqx&access_token=' + this.state.token + '', {
+      fetch('' + this.state.domain + '/index.php?app=Home&m=AuditApi&a=select_auditlist&apps=Asset&ms=Check&as=index&access_token=' + this.state.token + '', {
        method: 'POST',
        headers: {
        'Content-Type': 'application/x-www-form-urlencoded',
        },
        body: this.toQueryString({
-          'apps':'Kaoqin',
-          'ms':'Jilu',
-          'as':'person_shenh'
+          'apps':'Asset',
+          'ms':'Check',
+          'as':'index'
        })
      })
      .then(function (response) {

@@ -338,16 +338,7 @@ export default class Application extends Component {
 					   </Text>
 					  </View>
 					</TouchableNativeFeedback>
-					<TouchableNativeFeedback  onPress={this._all.bind(this,Chart )} >
-					  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>
-					   <View style={{width: 35, height: 35,borderRadius:5,backgroundColor:'#c2de53',alignItems:'center', justifyContent:'center'}}>
-					      <Image source={require('./imgs/chart.png')} style={{width: 26, height: 26,}} />
-					   </View>
-					   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{marginTop:8,fontSize:13}}>
-					      报表
-					   </Text>
-					  </View>
-					</TouchableNativeFeedback>
+					 
 
 
 				</View>
@@ -368,6 +359,19 @@ export default class Application extends Component {
 							return <TouchableNativeFeedback key={i}  onLongPress={this._long.bind(this,data)} onPress={this._all.bind(this,Sales)}  >
 					  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>
 					   <View style={{width: 35, height: 35,borderRadius:7,overflow:'hidden',backgroundColor:'#4385f4',alignItems:'center', justifyContent:'center'}}>
+					      <Image source={{uri:data.appicon}} style={{width: 35, height: 35,borderRadius:7,}} />
+					   </View>
+					   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{marginTop:8,fontSize:13}}>
+						   {data.appname}
+					   </Text>
+					  </View>
+					</TouchableNativeFeedback>
+						}
+						
+						if(data.weburl == 'https://www.baobiao.com'){
+							return <TouchableNativeFeedback key={i}  onLongPress={this._long.bind(this,data)} onPress={this._all.bind(this,Chart )}  >
+					  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>
+					   <View style={{width: 35, height: 35,borderRadius:7,overflow:'hidden',backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
 					      <Image source={{uri:data.appicon}} style={{width: 35, height: 35,borderRadius:7,}} />
 					   </View>
 					   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{marginTop:8,fontSize:13}}>

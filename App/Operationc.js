@@ -24,6 +24,18 @@ import productionca from './productionca';
 import Inquiry from './Inquiry';
 import marketma from './marketma';
 import customerm from './customerm';
+import FenX from './Examines/FenX';
+import FenX1 from './Examines/FenX1';
+import FenX2 from './Examines/FenX2';
+import FenX3 from './Examines/FenX3';
+import FenX4 from './Examines/FenX4';
+import FenX5 from './Examines/FenX5';
+import FenX6 from './Examines/FenX6';
+import Jxs from './Examines/Jxs';
+import Jxs1 from './Examines/Jxs1';
+import Jxs2 from './Examines/Jxs2';
+import Jxs3 from './Examines/Jxs3';
+import Jxs4 from './Examines/Jxs4';
 import qus from './qus';
 import CarMs from './CarMs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -228,6 +240,202 @@ export default class Approvalb extends React.Component {
 
 					}
 	            })
+			 }else if(data.app_name == '经销商管理'){
+				 if(data.from == 'Dealer'){
+					navigator.push({
+						name: 'Jxs',
+						component: Jxs,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dealer_1'){
+					navigator.push({
+						name: 'Jxs1',
+						component: Jxs1,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dealer_2'){
+					navigator.push({
+						name: 'Jxs2',
+						component: Jxs2,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dealer_3'){
+					navigator.push({
+						name: 'Jxs3',
+						component: Jxs3,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dealer_4'){
+					navigator.push({
+						name: 'Jxs4',
+						component: Jxs4,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else{
+					 navigator.push({
+						name: 'qus',
+						component: qus
+					})
+				 }
+				
+			 }else if(data.app_name == '分销管理'){
+				 // get王严(Dms_1,Dms_2,Dms_3)
+				 if(data.from == 'Dms_1'){
+					navigator.push({
+						name: 'FenX1',
+						component: FenX1,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_2'){
+					navigator.push({
+						name: 'FenX2',
+						component: FenX2,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_3'){
+					navigator.push({
+						name: 'FenX3',
+						component: FenX3,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_4'){
+					navigator.push({
+						name: 'FenX4',
+						component: FenX4,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_5'){
+					navigator.push({
+						name: 'FenX5',
+						component: FenX5,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms'){//get(余攀)
+					navigator.push({
+						name: 'FenX',
+						component: FenX,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else if(data.from == 'Dms_6'){//get(程非凡)
+					navigator.push({
+						name: 'FenX6',
+						component: FenX6,
+						params: {
+							data: data,
+							getUser: function(user) {
+
+								if(user == true){
+									_this._onRefresh();
+								}
+
+							}
+						}
+					})
+				 }else{
+					 navigator.push({
+						name: 'qus',
+						component: qus
+					})
+				 }	
 			 }else{
 			 	navigator.push({
 	                name: 'qus',

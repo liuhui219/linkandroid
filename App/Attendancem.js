@@ -139,11 +139,11 @@ export default class Attendancem extends Component {
 							'Content-Type': 'application/x-www-form-urlencoded',
 						  },
 						  body: that.toQueryString({
-							'app': 'Account',
-							'mm': 'Expense',
-							'aa':'auditqx',
+							'app': result.flow.node.split(".")[0],
+							'mm': result.flow.node.split(".")[1],
+							'aa':result.flow.node.split(".")[2],
 							'con_id': that.props.data.con_id,
-							'current_step':result.flow ? result.flow.current_step : 0
+							'current_step': result.flow ? result.flow.current_step : 0
 						  })
 						})
 						.then(function (response) {

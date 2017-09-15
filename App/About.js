@@ -5,6 +5,7 @@ import {
     Navigator,
 	TouchableOpacity,
 	TouchableHighlight,
+	ActivityIndicator,
 	Text,
 	BackHandler,
 	Image,
@@ -13,13 +14,14 @@ import {
 import PassState from './PassState';
 import Token from './Token';
 import DeviceInfo from 'react-native-device-info';
+import QRCode from 'react-native-qrcode';
 export default class About extends React.Component {
 
     constructor(props) {
         super(props);
 		this._pressButton = this._pressButton.bind(this);
         BackHandler.addEventListener('hardwareBackPress', this._pressButton);
-        this.state = {id: '',uid:'',datas:{},img:''};
+        this.state = {id: '',uid:'',datas:{},img:'', text: 'http://www.linksame.com/phone/android/Linksame.apk',show:true,};
     }
 
     _pressButton() {
@@ -32,12 +34,34 @@ export default class About extends React.Component {
 		return false;
     }
     componentDidMount() {
-
+        
+		this.timer = setTimeout(
+		  () => {  
+		   this.Qrcode('http://www.linksame.com/phone/qrcode.php');
+	    },800);
     }
+	
+	 
+	
+	Qrcode(url){
+		fetch(url)
+		  .then((response) => response.json())
+		  .then((responseData) => {
+                this.setState({
+					text:responseData.code,
+					show:false,
+				})
+		  })
+		  .catch((error) => {
+             this.setState({
+				 show:false,
+			 })
+		  });
+	}
 
 	componentWillUnmount() {
 	  BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
-
+      this.timer && clearTimeout(this.timer);
 	}
 
 
@@ -75,13 +99,17 @@ export default class About extends React.Component {
 					 </View>
 
 					 <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',marginTop:35,}}>
-					     <Image source={require('./imgs/link.png')} style={{width: 150, height: 150,}} />
+					     <View style={{width:160,height:160,justifyContent:'center',alignItems:'center'}}> 
+							 <QRCode
+							  value={this.state.text}
+							  size={150}
+							  bgColor='#000'
+							  fgColor='white'/>
+						 </View> 
 					     <View  style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:20,}}>
                               <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:12}} allowFontScaling={false}>扫描二维码，让你的朋友也可以下载客户端！</Text>
 					     </View>
-                         <View  style={{flexDirection:'row',justifyContent:'center',alignItems:'center',marginTop:20,}}>
-                              <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:12,color:'#d96464'}} allowFontScaling={false}>提示：请勿使用微信扫一扫下载！</Text>
-					     </View>
+                          
 					 </View>
 				 </View>
 				 <View style={{flexDirection:'column',justifyContent:'center',alignItems:'center',position:'absolute',bottom:30,left:0,width:Dimensions.get('window').width}}>
@@ -89,6 +117,13 @@ export default class About extends React.Component {
                        <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:12,marginTop:5,}} allowFontScaling={false}>邻盛管家-linksame版权所有</Text>
 				 </View>
 			</View>
+			
+			{this.state.show ? <View style={{justifyContent: 'center',alignItems: 'center',width:Dimensions.get('window').width, height:Dimensions.get('window').height-70,overflow:'hidden',position:'absolute',top:70,left:0, backgroundColor:'#fff'}}>
+						<View style={styles.loading}>
+							<ActivityIndicator color="white"/>
+							<Text allowFontScaling={false} adjustsFontSizeToFit={false} style={styles.loadingTitle}>加载中……</Text>
+						</View>
+			</View> : null}
       <PassState navigator = {this.props.navigator} {...this.props}/>
 	  </View>
     );
@@ -106,6 +141,21 @@ const styles = StyleSheet.create({
 	backgroundColor:'#4385f4',
 	flexDirection:'row'
   },
+  loading: {
+        backgroundColor: 'gray',
+        height: 80,
+        width: 100,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+
+    loadingTitle: {
+        marginTop: 10,
+        fontSize: 14,
+        color: 'white'
+    },
   default: {
     height: 37,
     borderWidth: 0,
