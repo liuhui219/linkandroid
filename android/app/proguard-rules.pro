@@ -11,3 +11,4 @@
 
 -keep class com.facebook.** { *; }
 -dontwarn com.facebook.react.**
+ 

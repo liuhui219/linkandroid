@@ -167,16 +167,7 @@ export default class Jxs extends Component {
 
 						})
 						.catch((error) => {
-							that.setState({
-								   loaded:true,
-								   statu:true,
-								   infos:'加载失败'
-							   })
-							that.timerx = setTimeout(() => {
-							  that.setState({
-								 statu:false,
-							})
-						  },1000)
+							 
 
 						  });
 
@@ -233,6 +224,7 @@ export default class Jxs extends Component {
 
 				})
 				.catch((error) => {
+					console.log(1111)
 					that.setState({
 						   loaded:true,
 						   statu:true,

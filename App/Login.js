@@ -53,6 +53,29 @@ export class Login extends Component {
     		        isshow:false,
     			})
     }
+	
+	componentWillUnmount(){
+		console.log(234542)
+		 fetch('' + data.data.domain + '/index.php?app=Im&m=User&a=mobileInfo&access_token=' + data.data.token + '', {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: this.toQueryString({
+           'token': '1',
+           'type': 0
+          })
+        })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (result) {
+         console.log(result);
+        })
+        .catch((error) => {
+
+        });
+	}
 
 	toQueryString(obj) {
       return obj ? Object.keys(obj).sort().map(function (key) {

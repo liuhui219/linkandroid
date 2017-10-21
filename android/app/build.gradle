@@ -90,8 +90,8 @@ android {
         applicationId "com.linksa"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 6
-        versionName "2.0.10"
+        versionCode 7
+        versionName "2.0.11"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -137,6 +137,7 @@ android {
 }
 
 dependencies { 
+    compile project(':react-native-orientation')
     compile project(':react-native-charts-wrapper')
     compile project(':RCTWeChat')
     compile project(':react-native-share-extension')

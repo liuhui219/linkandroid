@@ -12,9 +12,9 @@ import {
 	TouchableHighlight,
 	Modal,
 	Animated,
-	CameraRoll,
 	TextInput,
 	ActivityIndicator,
+	CameraRoll,
 	BackHandler,
 	Dimensions,
 	Image
@@ -63,12 +63,13 @@ export default class Jxs extends Component {
 			loadedst:false,
 			url:'',
 			SHR:[],
-			SHRS:[],
+			SHRS:[''],
 			shid:'',
 			shows:false,
 			poepleName:'',
 			listCheck:{},
 			img:'',
+			isshowd:true,
 		};
     }
 
@@ -148,6 +149,14 @@ export default class Jxs extends Component {
 								SHR:result.btns.auth_users,
 								listCheck:result.btns.list,
 							});
+							if(result.flow_data.length > 0){
+								console.log(result.flow_data[result.btns.info.slice(-1)])
+								that.setState({
+									isshowd:false,
+									shid:result.flow_data[result.btns.info.slice(-1)].users[0].uid,
+									poepleName:result.flow_data[result.btns.info.slice(-1)].users[0].name,
+								})
+							}
 							result.btns.auth_users.forEach((datas,i)=>{
 								SHRS.push(datas.name);
 								that.setState({SHRS:SHRS,});
@@ -155,16 +164,7 @@ export default class Jxs extends Component {
 
 						})
 						.catch((error) => {
-							that.setState({
-								   loaded:true,
-								   statu:true,
-								   infos:'加载失败'
-							   })
-							that.timerx = setTimeout(() => {
-							  that.setState({
-								 statu:false,
-							})
-						  },1000)
+							 
 
 						  });
 
@@ -592,17 +592,29 @@ showActionSheet() {
 						</View>
 					</View>
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,marginTop:15,}}>
+					{this.state.datas.base.cname ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,marginTop:15,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>经销商名称</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
 							<View style={{flex:1,}}>
 							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
-									{this.state.datas.change.cname}
+									{this.state.datas.base.cname}  
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
+					
+					{this.state.datas.change.cname ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,marginTop:15,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后经销商名称</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									{this.state.datas.change.cname} 
+								</Text>
+							</View>
+						</View>
+					</View> :null}
 					
 					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>经销商编号</Text>
@@ -630,8 +642,20 @@ showActionSheet() {
 						</View>
 					</View>
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.base.name ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>联系人</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.base.name}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.change.name ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后联系人</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
 							<View style={{flex:1,}}>
@@ -640,7 +664,33 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
+					
+					
+					
+					{this.state.datas.base.phone ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>联系电话</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.base.phone}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.change.phone ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后联系电话</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.phone}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
 					
 					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>签约时间</Text>
@@ -654,20 +704,20 @@ showActionSheet() {
 						</View>
 					</View>
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
-					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>联系电话</Text>
+					{this.state.datas.base.respo ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>经销商法人</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
 							<View style={{flex:1,}}>
 							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
-									 {this.state.datas.base.phone}
+									 {this.state.datas.base.respo}
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
-					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>经销商法人</Text>
+					{this.state.datas.change.respo ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后经销商法人</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
 							<View style={{flex:1,}}>
@@ -676,10 +726,22 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.base.respo_phone ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>法人电话</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.base.respo_phone}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.change.respo_phone ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后法人电话</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
 							<View style={{flex:1,}}>
@@ -688,7 +750,7 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
 					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>入网保证金</Text>
@@ -702,7 +764,7 @@ showActionSheet() {
 						</View>
 					</View>
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.base.bank_name ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>开户行名称</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
@@ -712,9 +774,21 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.change.bank_name ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后开户行名称</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.bank_name}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.base.bank_account ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>开户行账号</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
@@ -724,9 +798,21 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.change.bank_account? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后开户行账号</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.bank_account}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.base.credit_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>统一信用代码</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
@@ -736,9 +822,21 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.change.credit_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后统一信用代码</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.credit_code}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.base.tax_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>税务登记证号</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
@@ -748,9 +846,21 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
 					
-					<View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					{this.state.datas.change.tax_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后税务登记证号</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.tax_code}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
+					
+					{this.state.datas.base.group_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
 					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>组织机构代码</Text>
 						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
 
@@ -760,7 +870,19 @@ showActionSheet() {
 								</Text>
 							</View>
 						</View>
-					</View>
+					</View> : null}
+					
+					{this.state.datas.change.group_code ? <View style={{flexDirection:'row',height:50,backgroundColor:'#fff',alignItems:'center',justifyContent:'center',borderBottomWidth:1,borderColor:'#dcdcdc',paddingLeft:10,}}>
+					    <Text style={{fontSize:14,color:'#666',}} allowFontScaling={false} adjustsFontSizeToFit={false}>变更后组织机构代码</Text>
+						<View  style={{flex:1,marginLeft:15,flexDirection:'row',alignItems:'center',paddingRight:10,height:50,}}>
+
+							<View style={{flex:1,}}>
+							    <Text style={{fontSize:14,textAlign:'right',paddingRight:15, alignItems:'center'}} allowFontScaling={false} adjustsFontSizeToFit={false}>
+									 {this.state.datas.change.group_code}
+								</Text>
+							</View>
+						</View>
+					</View> : null}
 					
 					<View style={{flexDirection:'row',paddingTop:10,paddingBottom:10,alignItems:'flex-start',borderBottomWidth:1,borderColor:'#ececec',paddingLeft:10,backgroundColor:'#fff',}}>
 								 
@@ -933,9 +1055,10 @@ showActionSheet() {
 							  <View style={{backgroundColor:'#fff',marginTop:15,flexDirection:'column',paddingLeft:10,paddingTop:10,paddingBottom:10,}}>
                                  <View style={{flexDirection:'row',alignItems:'center'}}>
                                    <Text style={{fontSize:16}} allowFontScaling={false} adjustsFontSizeToFit={false}>审批人</Text>
-                                   <Text style={{fontSize:12,color:'#bbb',marginLeft:5}} allowFontScaling={false} adjustsFontSizeToFit={false}>(点击姓名可删除)</Text>
+								   {this.state.isshowd ? <Text style={{fontSize:12,color:'#bbb',marginLeft:5}} allowFontScaling={false} adjustsFontSizeToFit={false}>(点击姓名可删除)</Text> : null}
+								   {!this.state.isshowd ? <Text style={{fontSize:16,color:'#999',marginLeft:5}} allowFontScaling={false} adjustsFontSizeToFit={false}>-- {this.state.poepleName}</Text> : null}
                                  </View>
-                                 <View style={{marginTop:15,flexDirection:'row',alignItems:'center',}}>
+                                 {this.state.isshowd ? <View style={{marginTop:15,flexDirection:'row',alignItems:'center',}}>
                                      {this.state.poepleName != '' ? <TouchableOpacity onPress={this._delets.bind(this)} activeOpacity={1}><View style={{backgroundColor:'#60a9e8',paddingBottom:8,paddingTop:8,paddingLeft:10,paddingRight:10,marginRight:10,borderRadius:3}}>
                                         <Text style={{color:'#fff'}} allowFontScaling={false} adjustsFontSizeToFit={false}>{this.state.poepleName}</Text>
                                      </View></TouchableOpacity> : null}
@@ -944,7 +1067,7 @@ showActionSheet() {
                                       <Icon name="ios-add-circle-outline" color="#ccc"size={46}  />
 
                                     </TouchableOpacity>
-                                 </View>
+                                 </View> : null}
 							  </View>
 							  {this.state.tjstatus ? <TouchableHighlight onPress={this.tijiaos.bind(this)}  underlayColor="rgba(82, 132, 216,0.7)" style={{marginLeft:10,marginRight:10,marginTop:40, borderWidth:1,borderColor:'#ececec',borderRadius:5,paddingTop:10,paddingBottom:10, justifyContent:'center',alignItems:'center',backgroundColor:'#4385f4'}}>
 					            <View style={{borderRadius:5, justifyContent:'center',alignItems:'center',}}>

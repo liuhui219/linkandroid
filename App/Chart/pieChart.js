@@ -17,6 +17,7 @@ import {
 	processColor,
 	ListView,
 } from 'react-native';
+import PassState from '../PassState';
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 import update from 'immutability-helper'; 
@@ -402,6 +403,7 @@ export default class PieChartScreen extends React.Component {
 					<Text allowFontScaling={false} adjustsFontSizeToFit={false} style={styles.loadingTitle}>加载中……</Text>
 				</View>
 		</View> : null}
+		<PassState navigator = {this.props.navigator} {...this.props}/>
       </View>
     );
   }

@@ -13,6 +13,7 @@ import {
   ScrollView,
   Animated,
   StatusBar,
+  Platform,
   Dimensions,
   ToastAndroid,
   BackHandler,
@@ -54,6 +55,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import weather from './weather';
 import PushNotification from 'react-native-push-notification';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import DeviceInfo from 'react-native-device-info';
 import {
   MapView,
   MapTypes,
@@ -134,28 +136,11 @@ export default class FacebookExample extends Component {
 
 
     componentDidMount() {
+		console.log(DeviceInfo.getModel())
         var that = this; 
     	 this.location();
 
-       fetch('' + data.data.domain + '/index.php?app=Im&m=User&a=mobileInfo&access_token=' + data.data.token + '', {
-          method: 'POST',
-          headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: this.toQueryString({
-           'token': '1',
-           'type': 0
-          })
-        })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (result) {
-         console.log(result);
-        })
-        .catch((error) => {
-
-        });
+       
 
         DeviceEventEmitter.addListener('states',(datas) =>{
 			if(datas.data.msg.unreadData.hasOwnProperty('bgCount') && !datas.data.msg.unreadData.hasOwnProperty('ywCount') && !datas.data.msg.unreadData.hasOwnProperty('xxCount')){   
@@ -237,30 +222,92 @@ export default class FacebookExample extends Component {
 		if(datas.data.user == data.data.uid){
 			  isstate = true;
               //alert(JSON.stringify(datas))
-              DeviceEventEmitter.emit('states',datas);
+              if(datas.data.msg.hasOwnProperty('unreadData')){
+                  DeviceEventEmitter.emit('states',datas);
+			  } 
           
 					
 					
-					if((datas.data.msg.nopushios == 0 || datas.data.msg.nopushios == null) && datas.data.msg.title != '企业微圈消息'){
-
-							  PushNotification.localNotification({
-									id: new Date().getTime(),
-									ticker: datas.data.msg.title,
-									autoCancel: true,
-									largeIcon: "ic_launcher",
-									smallIcon: "ic_notification",
-									bigText: "My big text that will be shown when notification is expanded",
-									color: "blue",
-									vibrate: true,
-									vibration: 300,
-									tag: 'some_tag',
-									group: "group",
-									ongoing: false,
-									title: datas.data.msg.title,
-									message: datas.data.msg.content,
-									playSound: true,
-									soundName: 'default'
+					if((datas.data.msg.nopushios == 0 || datas.data.msg.nopushios == null ) && datas.data.msg.title != '企业微圈消息'){
+						      if(datas.data.token == data.data.token && datas.data.msg.type != 'out'){
+								  
+								    PushNotification.localNotification({
+										id: new Date().getTime(),
+										ticker: datas.data.msg.title,
+										autoCancel: true,
+										largeIcon: "ic_launcher",
+										smallIcon: "ic_notification",
+										bigText: datas.data.msg.content,
+										color: "blue",
+										vibrate: true,
+										vibration: 300,
+										tag: 'some_tag',
+										group: "group",
+										ongoing: false,
+										title: datas.data.msg.title,
+										message: datas.data.msg.content,
+										playSound: true,
+										soundName: 'default'
+									}); 
+								     
+							  }else if(datas.data.msg.type == 'out' && datas.data.token != data.data.token){
+								  PushNotification.localNotification({
+										id: new Date().getTime(),
+										ticker: datas.data.msg.title,
+										autoCancel: true,
+										largeIcon: "ic_launcher",
+										smallIcon: "ic_notification",
+										bigText: datas.data.msg.content,
+										color: "blue",
+										vibrate: true,
+										vibration: 300,
+										tag: 'some_tag',
+										group: "group",
+										ongoing: false,
+										title: datas.data.msg.title,
+										message: datas.data.msg.content,
+										playSound: true,
+										soundName: 'default'
+									}); 
+									
+									storage.clearMap();
+									storage.remove({
+										key: 'loginState'
+									});
+									storage.remove({
+									   key: 'password'
+									});
+									storage.remove({
+									   key: 'contact'
+									}); 
+									navigator.resetTo({
+										name: 'Login',
+										component: Login
+									})
+							  }
+							  /* if(datas.data.msg.type == 'out' ){
+								  
+								centrifuge.disconnect();  
+								 storage.clearMap();
+								storage.remove({
+									key: 'loginState'
 								});
+								storage.remove({
+								   key: 'password'
+								});
+								storage.remove({
+								   key: 'contact'
+								}); 
+								 navigator.resetTo({
+									name: 'Login',
+									component: Login
+								 })
+								 connectd = true;
+								 centrifuge.connect();
+								 
+							 } */
+
+							  
 					 }
 
 

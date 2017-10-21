@@ -45,3 +45,5 @@ include ':RCTWeChat'
 project(':RCTWeChat').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-wechat/android')
 include ':react-native-charts-wrapper'
 project(':react-native-charts-wrapper').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-charts-wrapper/android')
+include ':react-native-orientation', ':app'
+project(':react-native-orientation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-orientation/android')

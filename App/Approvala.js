@@ -73,6 +73,7 @@ export default class Approvalb extends React.Component {
     }
 	componentWillUnmount() {
 	  this.timer && clearTimeout(this.timer);
+	  BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
 	}
 	toQueryString(obj) {
 		return obj ? Object.keys(obj).sort().map(function (key) {

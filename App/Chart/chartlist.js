@@ -16,9 +16,16 @@ import {
 	RefreshControl,
 	ListView,
 } from 'react-native';
+import PassState from '../PassState';
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'; 
 import Icon from 'react-native-vector-icons/Ionicons';
 import pieChart from './pieChart';
+import listInfoa from './listInfoa';
+import listInfob from './listInfob';
+import listInfoc from './listInfoc';
+import listInfod from './listInfod';
+import listInfoe from './listInfoe';
+import qus from './qus';
 export default class List extends React.Component {
 
     constructor(props) {
@@ -27,6 +34,9 @@ export default class List extends React.Component {
 			BackHandler.addEventListener('hardwareBackPress', this._pressButton);
 		this.state = {
             data:[], 
+			domain:'',
+			show:true,
+			statua:false,
 	    };
     }
 
@@ -40,9 +50,25 @@ export default class List extends React.Component {
 		return false;
     }
     componentDidMount() {
-       this.setState({data:this.props.data})
-	   console.log(this.props.data)
+	   this.setState({domain:data.data.domain.slice(0,-6),})		  
+	   this.timer = setTimeout(() => {this.getData();},800);
     }
+	
+	getData(){
+		fetch('' + this.state.domain + 'app00aee5aa1cc1bf0ecd5d41/dashboard/getBoardListService.do?userId='+data.data.uid+'&category='+this.props.data+'&access_token=32886e81a349f1ef')
+		  .then((response) => response.json())
+		  .then((responseData) => { 
+		 
+		  console.log(responseData)
+             this.setState({data:responseData,show:false,});
+			 
+		  })   
+		  .catch((error) => {
+			 
+			  console.log(11111)
+             this.setState({show:false,statua:true,})
+          })
+	}
 	
 	 
   
@@ -57,15 +83,58 @@ export default class List extends React.Component {
 	go(datas){
 		var { navigator } = this.props;
         if(navigator) { 
-            navigator.push({
-                name: 'pieChart',
-                component: pieChart,
-				params: {
-					data: datas, 
-				}
-            }) 
+             navigator.push({
+					name: 'qus',
+					component: qus,  
+				}) 
+			if(datas.serverUrl == '/index.php?app=Dms&m=OutorderMobile&a=OutboundBi'){
+				navigator.push({
+					name: 'listInfoa',
+					component: listInfoa,
+					params: {
+						url: datas.serverUrl, 
+					}
+				})                        
+			}else if(datas.serverUrl == "/index.php?app=Dms&m=ReportMobile&a=getVerifData"){
+				navigator.push({
+					name: 'listInfob',
+					component: listInfob,
+					params: {
+						url: datas.serverUrl, 
+					}
+				}) 
+			}else if(datas.serverUrl == "/index.php?app=Dms&m=ReportMobile&a=getCwsData"){
+				navigator.push({
+					name: 'listInfoc',
+					component: listInfoc,
+					params: {
+						url: datas.serverUrl, 
+					}
+				}) 
+			}else if(datas.serverUrl == "/index.php?app=Dms&m=OutorderMobile&a=RepertoryList"){
+				navigator.push({
+					name: 'listInfod',
+					component: listInfod,
+					params: {
+						url: datas.serverUrl, 
+					}
+				}) 
+			}else if(datas.serverUrl == "/index.php?app=Dms&m=OutorderMobile&a=getKucunBi"){
+				navigator.push({
+					name: 'listInfoe',
+					component: listInfoe,
+					params: {
+						url: datas.serverUrl, 
+					}
+				}) 
+			}
         }
 	}
+	
+	_shuax(){
+		  this.getData();
+		  this.setState({show:true,statua:false})
+	  }
 
 
 
@@ -93,7 +162,7 @@ export default class List extends React.Component {
 					</View>
 
 					<View style={{flex:1,flexDirection:'column',backgroundColor:'#fff',}}>
-						{this.props.data.length !=0 ? this.props.data.map((datas,i)=>{
+						{this.state.data.length !=0 ? this.state.data.map((datas,i)=>{
 							return <TouchableHighlight key={i} onPress={this.go.bind(this,datas)} underlayColor="#d6d6d6">
 								 <View style={{flexDirection:'row',alignItems:'center',height:65,paddingLeft:10,borderBottomWidth:1,borderColor:'#ddd',}}> 
 									<View style={{flex:1,marginLeft:15,height:65,justifyContent:'space-between',flexDirection:'row',alignItems:'center',paddingRight:15}}>
@@ -102,12 +171,24 @@ export default class List extends React.Component {
 									</View>
 								 </View>
 							</TouchableHighlight>
-						}) : <View style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height-120,justifyContent:'center',alignItems:'center'}}><Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#000',fontSize:22}}>暂无数据</Text></View>}
+						}) : <View style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height-120,justifyContent:'center',alignItems:'center'}}><Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#999',fontSize:22}}>暂无数据</Text></View>}
 						
 					 
 						 
 					</View>
-					 
+					 {this.state.show ? <View style={{justifyContent: 'center',alignItems: 'center',width:Dimensions.get('window').width, height:Dimensions.get('window').height-70,overflow:'hidden',position:'absolute',top:70,left:0, backgroundColor:'#fff'}}>
+						<View style={styles.loading}>
+							<ActivityIndicator color="white"/>
+							<Text allowFontScaling={false} adjustsFontSizeToFit={false} style={styles.loadingTitle}>加载中……</Text>
+						</View>
+					</View> : null}
+					{this.state.statua ? <View style={{padding:10,width:200,borderRadius:5,backgroundColor:'rgba(23, 22, 22, 0.7)',justifyContent:'flex-start',alignItems:'center',position:'absolute',top:(Dimensions.get('window').height-105)/2,left:(Dimensions.get('window').width-200)/2,}}>
+					 <TouchableOpacity activeOpacity={1}  style={{justifyContent:'flex-start',alignItems:'center',}} onPress={this._shuax.bind(this)} >
+					  <Icon name="ios-refresh-outline" color="#fff"size={36}  />
+					  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,color:'#fff',marginTop:20,}}>加载失败，请点击重试。</Text>
+					 </TouchableOpacity>
+				   </View> : null}
+					 <PassState navigator = {this.props.navigator} {...this.props}/>
 	            </View>
            	)
 	}

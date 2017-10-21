@@ -52,6 +52,10 @@ export default class qus extends React.Component {
     componentDidMount() {
 
     }
+	
+	componentWillUnmount() { 
+	  BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
+	}
 
     componentWillMount(){
       storage.load({

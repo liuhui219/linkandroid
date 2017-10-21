@@ -95,10 +95,10 @@ export default class News extends React.Component {
 				  tabBarTextStyle={{fontSize: 16}} 
 				>
 				  <View  style={{marginTop:50,flex:1,}} tabLabel='未读'>
-				   <Newsa />
+				   <Newsa navigator = {this.props.navigator} {...this.props}/>
 				  </View>
 				  <View style={{marginTop:50,flex:1,}} tabLabel='已读'>
-					 <Newsb />
+					 <Newsb navigator = {this.props.navigator} {...this.props}/>
 				  </View>
 				</ScrollableTabView>
       <PassState navigator = {this.props.navigator} {...this.props}/>

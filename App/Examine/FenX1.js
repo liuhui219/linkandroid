@@ -159,14 +159,10 @@ export default class Marketm extends Component {
 						.catch((error) => {
 							that.setState({
 								   loaded:true,
-								   statu:true,
-								   infos:'加载失败'
+								   
+								    
 							   })
-							that.timerx = setTimeout(() => {
-							  that.setState({
-								 statu:false,
-							})
-						  },1000)
+							 
 
 						  });
 
@@ -204,7 +200,7 @@ export default class Marketm extends Component {
                     return response.json();
 				})
 				.then(function (result) {
-
+                     console.log('1111111',result)
 					 that.setState({
 						historydata: result.data.slice(0,-1),
 					});
@@ -223,6 +219,7 @@ export default class Marketm extends Component {
 
 				})
 				.catch((error) => {
+					
 					that.setState({
 						   loaded:true,
 						   statu:true,
@@ -411,7 +408,7 @@ export default class Marketm extends Component {
                     return response.json();
 				})
 				.then(function (result) {
-
+                     
 					 that.setState({
 					 	modalshows:false,
 						tj:'提交',

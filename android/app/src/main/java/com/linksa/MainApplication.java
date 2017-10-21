@@ -12,6 +12,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;  
+import com.github.yamill.orientation.OrientationPackage;
 import com.rnfs.RNFSPackage; 
 import com.theweflex.react.WeChatPackage;
 import com.alinz.parkerdan.shareextension.SharePackage;
@@ -54,6 +55,7 @@ public class MainApplication extends Application implements ReactApplication {
 		  new WeChatPackage(),
 		  new ReactNativeContacts(),
 		  new HttpCachePackage(), 
+		  new OrientationPackage(),
 		  new AndroidWebViewPackage(),
 		  new RCTCameraPackage(),
 		  new MPAndroidChartPackage(),

@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view';
-import Token from './Token';
+import Newsc from './Newsc';
 import HTMLView from 'react-native-htmlview';
 import Icon from 'react-native-vector-icons/Ionicons';
 var array = [];
@@ -64,6 +64,12 @@ export default class Newsb extends React.Component {
 	       this.fetchData('' + data.data.domain + '/index.php?app=Home&m=AuditApi&a=getAudit&uid=' + data.data.uid + '&cid=' + data.data.cid + '&access_token=' + data.data.token + '&p='+this.state.p);
 
     }
+	
+	componentWillUnmount() {
+
+	    BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
+
+	}
 
 	toQueryString(obj) {
 		return obj ? Object.keys(obj).sort().map(function (key) {
@@ -154,6 +160,21 @@ export default class Newsb extends React.Component {
 
 
 	}
+	
+	_InfoBut(data){
+		var { navigator } = this.props;
+		var _this=this;
+		if(navigator) {
+			navigator.push({
+	                name: 'Newsc',
+	                component: Newsc,
+					params: {
+						data: data,
+
+					}
+	        })
+		}
+	}
 
 
 
@@ -171,6 +192,7 @@ export default class Newsb extends React.Component {
 		  )
 		}
 		return(
+		  
 		 <ListView
 			dataSource={this.state.dataSource}
 			renderRow={this.renderMovie.bind(this)}
@@ -186,6 +208,7 @@ export default class Newsb extends React.Component {
                 />
             }
 		  />
+		  
 		)
 
 
@@ -224,10 +247,15 @@ export default class Newsb extends React.Component {
 				  </View>
 				  <View style={{flex:1,flexDirection:'column',}}>
 					   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,}}>{data.from_name}</Text>
-					   <View style={{backgroundColor:'#fff', borderRadius:3,marginRight:15,marginTop:5,padding:15,}}>
-						  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,color:'#4385f4'}}>{data.app_name}</Text>
-						  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{flexWrap:'wrap',marginTop:10,}}><HTMLView value={data.content} /></Text>
+					   <View style={{backgroundColor:'#fff', borderRadius:3,marginRight:15,marginTop:5,}}>
+						  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,color:'#4385f4',paddingTop:15,paddingLeft:15, paddingRight:15,}}>{data.app_name}</Text>
+						  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{flexWrap:'wrap',marginTop:10,paddingLeft:15, paddingRight:15,}}>{data.title}</Text>
+						  <TouchableOpacity   onPress={this._InfoBut.bind(this,data)} activeOpacity={0.8}  style={{flexDirection:'row',justifyContent:'space-between',borderTopWidth:0.5,borderColor:'#bbb',paddingTop:10,paddingBottom:10,marginTop:10,alignItems:'center',paddingLeft:15, paddingRight:15,}}>
+							  <Text allowFontScaling={false} adjustsFontSizeToFit={false}>阅读全文</Text>
+							  <Icon name="ios-arrow-forward" color="#ccc"size={25}  />
+						  </TouchableOpacity>
 					   </View>
+
 				  </View>
 			   </View>
 			</View>

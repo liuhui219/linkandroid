@@ -46,7 +46,7 @@ export default class Approvalb extends React.Component {
     constructor(props) {
         super(props);
 		this._pressButton = this._pressButton.bind(this);
-			BackHandler.addEventListener('hardwareBackPress', this._pressButton);
+		BackHandler.addEventListener('hardwareBackPress', this._pressButton);
 		this.state = {
 		  dataSource: new ListView.DataSource({
 			rowHasChanged: (row1, row2) => row1 !== row2,
@@ -88,6 +88,7 @@ export default class Approvalb extends React.Component {
 
 	componentWillUnmount() {
 	  this.timer && clearTimeout(this.timer);
+	  BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
 	}
 
 	toQueryString(obj) {
@@ -450,7 +451,7 @@ export default class Approvalb extends React.Component {
 							}
 						}
 					})
-				 }else if(data.from == 'Dms'){//get(余攀)
+				 }else if(data.from == 'Dms_7'){//get(余攀)
 					navigator.push({
 						name: 'FenX',
 						component: FenX,

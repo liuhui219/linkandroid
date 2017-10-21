@@ -69,6 +69,11 @@ export default class Approvalb extends React.Component {
 	       this.fetchData('' + data.data.domain + '/index.php?app=Home&m=AuditApi&a=getAudit&uid='+data.data.uid+'&cid='+data.data.cid+'&access_token=' + data.data.token + '&p='+this.state.p);
 
     }
+	
+	componentWillUnmount() {
+	  this.timer && clearTimeout(this.timer);
+	  BackHandler.removeEventListener('hardwareBackPress', this._pressButton);
+	}
 
 	toQueryString(obj) {
 		return obj ? Object.keys(obj).sort().map(function (key) {

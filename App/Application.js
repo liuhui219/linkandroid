@@ -26,6 +26,7 @@ import Webviews from './Webviews';
 import MoreApp from './MoreApp';
 import Mattendance from './Mattendance';
 import Gonggao from './Gonggao';
+import OperationX from './OperationX';
 import Scanner from './scanner';
 import pan from './pan';
 import Sales from './Sales/Sales';
@@ -47,6 +48,8 @@ export default class Application extends Component {
 		  uid:'',
 		  status:false,
 		  datas:[],
+		  imgArr:[],
+		  All:[],
 		  loaded: true,
 		  key:'',
 		  statua:false,
@@ -149,6 +152,7 @@ export default class Application extends Component {
 
 	_addsapp(){
 		var that=this;
+		var imgArr = [];
 		fetch('' + data.data.domain + '/index.php?app=Home&m=MobileUserApps&a=lists&access_token=' + data.data.token + '', {
 				  method: 'POST',
 				  headers: {
@@ -167,8 +171,34 @@ export default class Application extends Component {
 					   that.setState({
 						 datas:result.data,
 						 isloading: false,
-						 loaded:true,
+						 loaded:true, 
 					   })
+					  
+					 
+					    console.log('' + data.data.domain + '/index.php?app=Home&m=GroupMobile&a=groupList&access_token=' + data.data.token + '')
+					   fetch('' + data.data.domain + '/index.php?app=Home&m=GroupMobile&a=groupList&access_token=' + data.data.token + '')
+						  .then((response) => response.json())
+						  .then((responseData) => { 
+						      console.log(responseData)
+							  
+							  
+						  })   
+						  .catch((error) => {
+							  console.log(1111)
+							 that.setState({
+									   isloading: false,
+									   statua:true,
+									   loaded:true,
+								   })
+								Animated.timing(
+									that.state.fadeAnims,
+									{
+									  toValue: 1,
+									  duration: 1000,
+									},
+
+								 ).start();
+						  })
 
 				})
 				.catch((error) => {
@@ -339,10 +369,39 @@ export default class Application extends Component {
 					  </View>
 					</TouchableNativeFeedback>
 					 
+					 
 
 
 				</View>
 			 </View>
+			 
+			 {this.state.All.length>0 ? <View style={{backgroundColor:'#fff',marginTop:15,}}>
+			    <View style={{borderBottomWidth:1,borderColor:'#ececec'}}>
+					<Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:14,paddingTop:10,paddingBottom:10,paddingLeft:10,}}>
+					   集团应用
+					</Text>
+			    </View>
+
+				<View style={{flexDirection:'row',flex:1,flexWrap:'wrap',}}>
+                    {this.state.isloading ? <View style={{flexDirection:'row',flex:1,height:150,alignItems:'center',justifyContent:'center',}}><Spinner  isVisible={true} size={50} type={'ThreeBounce'} color={'#4385f4'}/></View> : null}
+				    {!this.state.isloading ? <View style={{flexDirection:'row',flex:1,flexWrap:'wrap',}}>
+						{this.state.All.length>0 ? this.state.All.map((data, i) => {
+							return <TouchableNativeFeedback key={i}   >
+							  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>
+							   <View style={{width: 35, height: 35,borderRadius:7,overflow:'hidden',backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
+								  <Image source={this.state.imgArr[i]} style={{width: 35, height: 35,borderRadius:7,}} />
+							   </View>
+							   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{marginTop:8,fontSize:13}}>
+								   {data.name}
+							   </Text>
+							  </View>
+							</TouchableNativeFeedback>
+						}) : null}
+					 
+					</View>	: null}
+
+				</View>
+			 </View> : null}
 
 
 			 <View style={{backgroundColor:'#fff',marginTop:15,}}>
@@ -354,7 +413,9 @@ export default class Application extends Component {
 
 				<View style={{flexDirection:'row',flex:1,flexWrap:'wrap',}}>
                     {this.state.isloading ? <View style={{flexDirection:'row',flex:1,height:150,alignItems:'center',justifyContent:'center',}}><Spinner  isVisible={true} size={50} type={'ThreeBounce'} color={'#4385f4'}/></View> : null}
-				    {!this.state.isloading ? <View style={{flexDirection:'row',flex:1,flexWrap:'wrap',}}>{this.state.datas.length>0 ? this.state.datas.map((data, i) => {
+				    {!this.state.isloading ? <View style={{flexDirection:'row',flex:1,flexWrap:'wrap',}}>
+						 
+					{this.state.datas.length>0 ? this.state.datas.map((data, i) => {
 						if(data.weburl == 'https://www.xiaoshou.com'){
 							return <TouchableNativeFeedback key={i}  onLongPress={this._long.bind(this,data)} onPress={this._all.bind(this,Sales)}  >
 					  <View style={{alignItems:'center', justifyContent:'center',width:Dimensions.get('window').width/4,height:Dimensions.get('window').width/4,borderRightWidth:1,borderBottomWidth:1,borderColor:'#ececec',}}>

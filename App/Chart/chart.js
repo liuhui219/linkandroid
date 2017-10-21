@@ -16,8 +16,10 @@ import {
 	RefreshControl,
 	ListView,
 } from 'react-native';
+import PassState from '../PassState';
 import ScrollableTabView, { DefaultTabBar, } from 'react-native-scrollable-tab-view'; 
 import List from './chartlist';
+import Listx from './chartlistx';
 import Icon from 'react-native-vector-icons/Ionicons';
 var array = [];
 var aa=[];
@@ -48,45 +50,31 @@ export default class Chart extends React.Component {
     componentDidMount() {
 	  this.setState({domain:data.data.domain.slice(0,-6)})	
       this.timer = setTimeout(() => {this.getData();},800);
+	  
     }
 	
 	getData(){ 
 	var arr = [];
 	var arrName=[];
 	var main = [];
-    fetch('' + this.state.domain + 'app00aee5aa1cc1bf0ecd5d41/dashboard/getBoardListService.do?userId='+data.data.uid+'&access_token=32886e81a349f1ef')
+	                              
+    fetch('' + this.state.domain + 'app00aee5aa1cc1bf0ecd5d41/dashboard/getCategoryListService.do?userId='+data.data.uid+'&access_token=32886e81a349f1ef')
 		  .then((response) => response.json())
 		  .then((responseData) => { 
+		 
 		  console.log(responseData)
-             this.setState({data:responseData});
-			 responseData.forEach((info,i)=>{
-				 arr.push(info.categoryName);
-				 arrName = [...new Set(arr)];
-				 if(i == responseData.length-1){
-					 arrName.forEach((name)=>{
-						 var obj={'categoryName':name,Data:[]};
-						 responseData.forEach((infos,i)=>{
-							 if(infos.categoryName == name){
-								obj.Data.push(infos);  							
-							 }
-							 
-						 })
-						 main.push(obj);
-						 this.setState({categoryName:main,show:false,})
-						 console.log(main)	
-						 
-					 }) 
-				 }
-				 
-			 })
+             this.setState({data:responseData,show:false,});
+			 
 		  })   
 		  .catch((error) => {
-             this.setState({show:false,statua:true})
+			 
+			  console.log(11111)
+             this.setState({show:false,})
           })
   }
   
   _shuax(){
-	  this.getSH();
+	  this.getData();
 	  this.setState({show:true,statua:false})
   }
 
@@ -103,8 +91,18 @@ export default class Chart extends React.Component {
                 name: 'List',
                 component: List,
                 params: {
-					data: data.Data, 
+					data: data.id, 
 				}
+            }) 
+        }
+	}
+	
+	listx(){
+		var { navigator } = this.props;
+        if(navigator) { 
+            navigator.push({
+                name: 'Listx',
+                component: Listx 
             }) 
         }
 	}
@@ -135,16 +133,18 @@ export default class Chart extends React.Component {
 					</View>
 
 					<View style={{flex:1,flexDirection:'column',backgroundColor:'#fff',}}>
-						{this.state.categoryName.length !=0 ? this.state.categoryName.map((datas,i)=>{
+					     
+						{this.state.data.length !=0 ? this.state.data.map((datas,i)=>{
 							return <TouchableHighlight key={i} onPress={this.list.bind(this,datas)} underlayColor="#d6d6d6">
 							 <View style={{flexDirection:'row',alignItems:'center',height:65,paddingLeft:10,borderBottomWidth:1,borderColor:'#ddd',}}> 
 								<View style={{flex:1,marginLeft:15,height:65,justifyContent:'space-between',flexDirection:'row',alignItems:'center',paddingRight:15}}>
-								   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#666',fontSize:16}}>{datas.categoryName}</Text>
+								   <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#666',fontSize:16}}>{datas.name}</Text>
 								   <Image source={require('../imgs/right.png')} style={{width: 20, height: 18,}} />
 								</View>
 							 </View>
 						 </TouchableHighlight>
-						}) : <View style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height-120,justifyContent:'center',alignItems:'center'}}><Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#000',fontSize:22}}>暂无数据</Text></View>}
+						 
+						}) : <View style={{width:Dimensions.get('window').width, height:Dimensions.get('window').height-120,justifyContent:'center',alignItems:'center'}}><Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{color:'#999',fontSize:22}}>暂无数据</Text></View>}
 						 
 					</View>
 					{this.state.show ? <View style={{justifyContent: 'center',alignItems: 'center',width:Dimensions.get('window').width, height:Dimensions.get('window').height-70,overflow:'hidden',position:'absolute',top:70,left:0, backgroundColor:'#fff'}}>
@@ -159,6 +159,7 @@ export default class Chart extends React.Component {
 					  <Text allowFontScaling={false} adjustsFontSizeToFit={false} style={{fontSize:16,color:'#fff',marginTop:20,}}>加载失败，请点击重试。</Text>
 					 </TouchableOpacity>
 				   </View> : null}
+				   <PassState navigator = {this.props.navigator} {...this.props}/>
 	            </View>
            	)
 	}
